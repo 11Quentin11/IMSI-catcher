@@ -101,7 +101,7 @@ def find_assignment(x):
 		if ord(p[0x3c]) == 0x3f: # Message Type: Immediate Assignment
 			if ord(p[0x3d]) >> 4 == 0: # 0000 .... = Dedicated mode or TBF: This message assigns a dedicated mode resource (0)
 				sdcch=ord(p[0x3e]) >> 3 # 0100 0... = SDCCH/8 + SACCH/C8 or CBCH (SDCCH/8): 8
-				subchannel=ord(p[0x3e])
+				subchannel=(ord(p[0x3e]) >> 3) & 0x7
 				timeslot=ord(p[0x3e]) & 0x07 # .... .001 = Timeslot: 1
 				hopping_channel="yes" if (ord(p[0x3f]) >> 4) & 1 == 1 else "no" # ...0 .... = Hopping Channel: No
 				arfcn=(ord(p[0x3f]) & 0x03)*256 + ord(p[0x40]) # .... ..11  1101 1111 = Single channel ARFCN: 991
